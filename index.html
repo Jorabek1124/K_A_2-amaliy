@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klassik shifrlash algoritmlari - Amaliy ko'rsatkich</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔐 Klassik shifrlash algoritmlari</h1>
+            <p class="subtitle">RSA, Vigenère va boshqa shifrlash algoritmlarini o'rganing</p>
+        </header>
+
+        <nav class="algorithm-tabs">
+            <button class="tab-btn active" data-algorithm="rsa">RSA</button>
+            <button class="tab-btn" data-algorithm="vigenere">Vigenère</button>
+            <button class="tab-btn" data-algorithm="caesar">Caesar</button>
+            <button class="tab-btn" data-algorithm="base64">Base64</button>
+        </nav>
+
+        <!-- RSA Algorithm Section -->
+        <section id="rsa-section" class="algorithm-section active">
+            <div class="algorithm-info">
+                <h2>RSA shifrlash algoritmi</h2>
+                <p>RSA (Rivest-Shamir-Adleman) - asimmetrik shifrlash algoritmi. Ochiq va yopiq kalitlardan foydalanadi.</p>
+            </div>
+
+            <div class="theory-section">
+                <h3>📚 Nazariy ma'lumotlar</h3>
+                
+                <h4>Algoritmning asoslari</h4>
+                <p>RSA algoritmi 1977-yilda Rivest, Shamir va Adleman tomonidan yaratilgan. Bu algoritm tub sonlar nazariyasiga asoslangan va asimmetrik shifrlash usulidir.</p>
+                
+                <h4>Kalitlar yaratish jarayoni</h4>
+                <div class="calculation-steps">
+                    <h5>1-qadam: Ikki tub son tanlash</h5>
+                    <p>P va Q - ikki katta tub sonlar tanlanadi</p>
+                    <p><strong>Misol:</strong> P = 61, Q = 53</p>
+                </div>
+
+                <div class="calculation-steps">
+                    <h5>2-qadam: n ni hisoblash</h5>
+                    <div class="formula-box">n = P × Q</div>
+                    <p><strong>Hisoblash:</strong> n = 61 × 53 = 3233</p>
+                </div>
+
+                <div class="calculation-steps">
+                    <h5>3-qadam: Eyler funksiyasi φ(n)</h5>
+                    <div class="formula-box">φ(n) = (P - 1) × (Q - 1)</div>
+                    <p><strong>Hisoblash:</strong> φ(3233) = (61 - 1) × (53 - 1) = 60 × 52 = 3120</p>
+                </div>
+
+                <div class="calculation-steps">
+                    <h5>4-qadam: Ochiq kalit (e) tanlab olish</h5>
+                    <p>e ni tanlash kerak, bunda:</p>
+                    <ul>
+                        <li>1 < e < φ(n)</li>
+                        <li>gcd(e, φ(n)) = 1 (e va φ(n) o'zaro tub bo'lishi kerak)</li>
+                    </ul>
+                    <p><strong>Misol:</strong> e = 17 (gcd(17, 3120) = 1)</p>
+                </div>
+
+                <div class="calculation-steps">
+                    <h5>5-qadam: Yopiq kalit (d) topish</h5>
+                    <div class="formula-box">d × e ≡ 1 (mod φ(n))</div>
+                    <p>Bu yerda d - e ning modul inversiyasi</p>
+                    <p><strong>Hisoblash:</strong> d = 2753 (chunki 2753 × 17 ≡ 1 (mod 3120))</p>
+                </div>
+
+                <h4>Shifrlash va deshifrlash</h4>
+                <div class="example-box">
+                    <h4>Shifrlash formulasi:</h4>
+                    <div class="formula-box">C = M<sup>e</sup> mod n</div>
+                    <p>Bu yerda:</p>
+                    <ul>
+                        <li><strong>C</strong> - shifrlangan matn (ciphertext)</li>
+                        <li><strong>M</strong> - asl matn (plaintext)</li>
+                        <li><strong>e, n</strong> - ochiq kalit</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Deshifrlash formulasi:</h4>
+                    <div class="formula-box">M = C<sup>d</sup> mod n</div>
+                    <p>Bu yerda:</p>
+                    <ul>
+                        <li><strong>M</strong> - deshifrlangan matn</li>
+                        <li><strong>C</strong> - shifrlangan matn</li>
+                        <li><strong>d, n</strong> - yopiq kalit</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Amaliy misol:</h4>
+                    <p><strong>Kalitlar:</strong></p>
+                    <ul>
+                        <li>P = 61, Q = 53</li>
+                        <li>n = 3233</li>
+                        <li>φ(n) = 3120</li>
+                        <li>e = 17 (ochiq kalit)</li>
+                        <li>d = 2753 (yopiq kalit)</li>
+                    </ul>
+                    <p><strong>Matn:</strong> "A" (ASCII kodi: 65)</p>
+                    <p><strong>Shifrlash:</strong> C = 65<sup>17</sup> mod 3233 = 2790</p>
+                    <p><strong>Deshifrlash:</strong> M = 2790<sup>2753</sup> mod 3233 = 65</p>
+                </div>
+
+                <h4>Matematik Asoslar</h4>
+                <div class="calculation-steps">
+                    <h5>Eyler teoremasi:</h5>
+                    <div class="formula-box">a<sup>φ(n)</sup> ≡ 1 (mod n)</div>
+                    <p>Bu yerda a va n o'zaro tub sonlar, φ(n) - Eyler funksiyasi</p>
+                </div>
+
+                <div class="calculation-steps">
+                    <h5>RSA xavfsizligi:</h5>
+                    <p>RSA xavfsizligi quyidagi muammoga asoslangan:</p>
+                    <div class="formula-box">n = P × Q ni faktorizatsiya qilish qiyin</div>
+                    <p>Katta tub sonlarni ko'paytmasini faktorizatsiya qilish juda qiyin. Hozirgi vaqtda 2048-bit kalitlar xavfsiz hisoblanadi.</p>
+                </div>
+
+                <div class="calculation-steps">
+                    <h5>Tez modul darajasi (Fast Modular Exponentiation):</h5>
+                    <p>Katta darajalarni hisoblash uchun quyidagi algoritm ishlatiladi:</p>
+                    <div class="formula-box">
+                        a<sup>b</sup> mod n = (a<sup>b/2</sup> mod n)<sup>2</sup> mod n (agar b juft)<br>
+                        a<sup>b</sup> mod n = a × (a<sup>b-1</sup> mod n) mod n (agar b toq)
+                    </div>
+                    <p>Bu algoritm O(log b) vaqtda ishlaydi.</p>
+                </div>
+
+                <div class="calculation-steps">
+                    <h5>Extended Euclidean algorithm:</h5>
+                    <p>Modul inversiyani topish uchun:</p>
+                    <div class="formula-box">
+                        ax + by = gcd(a, b)<br>
+                        Agar gcd(a, b) = 1 bo'lsa, x = a<sup>-1</sup> mod b
+                    </div>
+                </div>
+
+                <h4>Xavfsizlik Tahlili</h4>
+                <div class="example-box">
+                    <h4>RSA hujumlar:</h4>
+                    <ul>
+                        <li><strong>Faktorizatsiya hujumi:</strong> n ni P va Q ga ajratish</li>
+                        <li><strong>Chosen plaintext attack:</strong> Tanlangan matn bilan hujum</li>
+                        <li><strong>Timing attack:</strong> Hisoblash vaqtini o'lchash</li>
+                        <li><strong>Side-channel attack:</strong> Fizik o'lchovlar orqali</li>
+                    </ul>
+                    <p><strong>Himoya:</strong> OAEP padding, katta kalitlar (2048-bit+), xavfsiz amaliyotlar</p>
+                </div>
+
+                <h4>Amaliy Qo'llanilishi</h4>
+                <div class="example-box">
+                    <h4>RSA qayerda ishlatiladi:</h4>
+                    <ul>
+                        <li>HTTPS protokoli (SSL/TLS)</li>
+                        <li>Elektron imzo (Digital Signature)</li>
+                        <li>Email shifrlash (PGP, S/MIME)</li>
+                        <li>VPN va xavfsiz aloqa</li>
+                        <li>Kriptovalyuta (Bitcoin, Ethereum)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="key-generation">
+                <h3>Kalitlar yaratish</h3>
+                <div class="key-controls">
+                    <label>
+                        P (soddalashtirilgan):
+                        <input type="number" id="rsa-p" value="61" min="2" max="97">
+                    </label>
+                    <label>
+                        Q (soddalashtirilgan):
+                        <input type="number" id="rsa-q" value="53" min="2" max="97">
+                    </label>
+                    <button id="rsa-generate-keys" class="btn btn-primary">Kalitlarni yaratish</button>
+                </div>
+                <div class="keys-display">
+                    <div class="key-box">
+                        <label>Ochiq kalit (e, n):</label>
+                        <textarea id="rsa-public-key" readonly></textarea>
+                    </div>
+                    <div class="key-box">
+                        <label>Yopiq kalit (d, n):</label>
+                        <textarea id="rsa-private-key" readonly></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="encryption-area">
+                <div class="input-group">
+                    <label>Matn (shifrlash uchun):</label>
+                    <textarea id="rsa-plaintext" placeholder="Shifrlanadigan matnni kiriting..."></textarea>
+                    <button id="rsa-encrypt" class="btn btn-success">Shifrlash</button>
+                </div>
+                <div class="output-group">
+                    <label>Shifrlangan matn:</label>
+                    <textarea id="rsa-ciphertext" readonly></textarea>
+                    <button id="rsa-decrypt" class="btn btn-warning">Deshifrlash</button>
+                </div>
+                <div class="result-group">
+                    <label>Deshifrlangan matn:</label>
+                    <textarea id="rsa-decrypted" readonly></textarea>
+                </div>
+                <div class="calculation-display" id="rsa-calculations" style="display: none;">
+                    <h5 style="color: var(--primary-color); margin-bottom: 10px;">Hisoblash Jarayoni:</h5>
+                    <div id="rsa-calc-content"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vigenère Algorithm Section -->
+        <section id="vigenere-section" class="algorithm-section">
+            <div class="algorithm-info">
+                <h2>Vigenère shifrlash algoritmi</h2>
+                <p>Vigenère - polialfavitik shifrlash algoritmi. Bir nechta Caesar shifrlaridan foydalanadi.</p>
+            </div>
+
+            <div class="theory-section">
+                    <h3>📚 Nazariy ma'lumotlar</h3>
+                
+                <h4>Algoritmning asoslari</h4>
+                <p>Vigenère shifri 16-asrda Blaise de Vigenère tomonidan yaratilgan. Bu polialfavitik shifrlash usuli bo'lib, bir nechta Caesar shifrlarini ketma-ket qo'llash orqali ishlaydi.</p>
+                
+                <h4>Ishlash prinsipi</h4>
+                <p>Har bir harf uchun kalit so'zdan olingan harf bo'yicha alohida siljish qo'llaniladi. Bu monoalfavitik shifrlardan farqli ravishda, bir xil harf turli harflarga shifrlanadi.</p>
+
+                <div class="example-box">
+                    <h4>Shifrlash formulasi:</h4>
+                    <div class="formula-box">C<sub>i</sub> = (P<sub>i</sub> + K<sub>i</sub>) mod 26</div>
+                    <p>Bu yerda:</p>
+                    <ul>
+                        <li><strong>C<sub>i</sub></strong> - shifrlangan harf</li>
+                        <li><strong>P<sub>i</sub></strong> - asl harf (0-25 orasida)</li>
+                        <li><strong>K<sub>i</sub></strong> - kalit harf (0-25 orasida)</li>
+                        <li><strong>mod 26</strong> - 26 ga modul (alfavit uzunligi)</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Deshifrlash formulasi:</h4>
+                    <div class="formula-box">P<sub>i</sub> = (C<sub>i</sub> - K<sub>i</sub> + 26) mod 26</div>
+                </div>
+
+                <div class="example-box">
+                    <h4>Amaliy misol:</h4>
+                    <p><strong>Asl matn:</strong> "HELLO"</p>
+                    <p><strong>Kalit so'z:</strong> "KEY"</p>
+                    <p><strong>Kalit kengaytirilgan:</strong> "KEYKE"</p>
+                    <div class="calculation-steps">
+                        <h5>Har bir harf uchun hisoblash:</h5>
+                        <ol>
+                            <li>H (7) + K (10) = 17 → R</li>
+                            <li>E (4) + E (4) = 8 → I</li>
+                            <li>L (11) + Y (24) = 35 mod 26 = 9 → J</li>
+                            <li>L (11) + K (10) = 21 → V</li>
+                            <li>O (14) + E (4) = 18 → S</li>
+                        </ol>
+                        <p><strong>Natija:</strong> "RIJVS"</p>
+                    </div>
+                </div>
+
+                <h4>Matematik asoslar</h4>
+                <div class="calculation-steps">
+                    <h5>Vigenère jadvali:</h5>
+                    <p>Vigenère shifri quyidagi jadvaldan foydalanadi:</p>
+                    <div class="formula-box">
+                        Vigenère(i, j) = (i + j) mod 26<br>
+                        Bu yerda i - asl harf, j - kalit harf
+                    </div>
+                    <p>Jadval 26×26 o'lchamda bo'lib, har bir katakda shifrlangan harf joylashgan.</p>
+                </div>
+
+                <div class="calculation-steps">
+                    <h5>Kalit kengaytirish:</h5>
+                    <div class="formula-box">
+                        K<sub>i</sub> = Key[i mod len(Key)]<br>
+                        Bu yerda len(Key) - kalit so'z uzunligi
+                    </div>
+                    <p><strong>Misol:</strong> Key = "KEY", matn uzunligi = 5</p>
+                    <p>Kengaytirilgan kalit: K[0], K[1], K[2], K[0], K[1] = "KEYKE"</p>
+                </div>
+
+                <div class="calculation-steps">
+                    <h5>Periodik xususiyat:</h5>
+                    <p>Vigenère shifri periodik xususiyatga ega:</p>
+                    <div class="formula-box">
+                        Agar kalit uzunligi L bo'lsa, har L-harfdan keyin shifr takrorlanadi
+                    </div>
+                    <p>Bu xususiyat Kasiski testi orqali kalit uzunligini topishga imkon beradi.</p>
+                </div>
+
+                <h4>Kriptanaliz</h4>
+                <div class="example-box">
+                    <h4>Vigenère hujumlar:</h4>
+                    <ul>
+                        <li><strong>Kasiski test:</strong> Takrorlanuvchi qismlarni topish</li>
+                        <li><strong>Friedman test:</strong> Index of Coincidence hisoblash</li>
+                        <li><strong>Frequency analysis:</strong> Har bir pozitsiyada harf chastotalarini tahlil qilish</li>
+                    </ul>
+                    <div class="formula-box">
+                        IC = Σ(f<sub>i</sub> × (f<sub>i</sub> - 1)) / (n × (n - 1))<br>
+                        Bu yerda f<sub>i</sub> - harf chastotasi, n - matn uzunligi
+                    </div>
+                </div>
+
+                <h4>Tarixiy ma'lumotlar</h4>
+                <div class="example-box">
+                    <p>Vigenère shifri 1553-yilda Giovan Battista Bellaso tomonidan yaratilgan, lekin 19-asrda Blaise de Vigenère nomi bilan mashhur bo'lgan. Bu shifr 300 yil davomida "buzilmas" deb hisoblangan, lekin 1863-yilda Friedrich Kasiski tomonidan buzilgan.</p>
+                </div>
+
+                <h4>Xususiyatlar</h4>
+                <ul>
+                    <li>Polialfavitik shifrlash - bir xil harf turli harflarga shifrlanadi</li>
+                    <li>Kalit so'z matn uzunligiga moslashtiriladi</li>
+                    <li>Caesar shifridan xavfsizroq</li>
+                    <li>Kalit so'z uzunligi qancha katta bo'lsa, shuncha xavfsiz</li>
+                </ul>
+            </div>
+
+            <div class="encryption-area">
+                <div class="input-group">
+                    <label>Kalit so'z:</label>
+                    <input type="text" id="vigenere-key" placeholder="Kalit so'zni kiriting..." value="KEY">
+                    <label>Matn (shifrlash uchun):</label>
+                    <textarea id="vigenere-plaintext" placeholder="Shifrlanadigan matnni kiriting..."></textarea>
+                    <button id="vigenere-encrypt" class="btn btn-success">Shifrlash</button>
+                </div>
+                <div class="output-group">
+                    <label>Shifrlangan matn:</label>
+                    <textarea id="vigenere-ciphertext" readonly></textarea>
+                    <button id="vigenere-decrypt" class="btn btn-warning">Deshifrlash</button>
+                </div>
+                <div class="result-group">
+                    <label>Deshifrlangan matn:</label>
+                    <textarea id="vigenere-decrypted" readonly></textarea>
+                </div>
+                <div class="calculation-display" id="vigenere-calculations" style="display: none;">
+                    <h5 style="color: var(--primary-color); margin-bottom: 10px;">Hisoblash Jarayoni:</h5>
+                    <div id="vigenere-calc-content"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Caesar Algorithm Section -->
+        <section id="caesar-section" class="algorithm-section">
+            <div class="algorithm-info">
+                <h2>Caesar shifrlash algoritmi</h2>
+                <p>Caesar - eng qadimgi shifrlash algoritmlaridan biri. Harflarni ma'lum miqdorda siljitadi.</p>
+            </div>
+
+            <div class="theory-section">
+                <h3>📚 Nazariy ma'lumotlar</h3>
+                
+                <h4>Algoritmning tarixi</h4>
+                <p>Caesar shifri miloddan avval 100-yilda Rim imperatori Yuliy Sezar tomonidan ishlatilgan. Bu eng qadimgi va eng oddiy shifrlash usullaridan biridir.</p>
+                
+                <h4>Ishlash prinsipi</h4>
+                <p>Har bir harf alfavitda ma'lum miqdorda (shift) o'ngga yoki chapga siljitiladi. Alfavit oxiriga yetganda, boshidan davom etadi (modul 26).</p>
+
+                <div class="example-box">
+                    <h4>Shifrlash formulasi:</h4>
+                    <div class="formula-box">C = (P + shift) mod 26</div>
+                    <p>Bu yerda:</p>
+                    <ul>
+                        <li><strong>C</strong> - shifrlangan harf</li>
+                        <li><strong>P</strong> - asl harf (0-25 orasida, A=0, B=1, ..., Z=25)</li>
+                        <li><strong>shift</strong> - siljish miqdori (1-25)</li>
+                        <li><strong>mod 26</strong> - 26 ga modul</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Deshifrlash formulasi:</h4>
+                    <div class="formula-box">P = (C - shift + 26) mod 26</div>
+                    <p>+26 qo'shiladi, chunki manfiy son bo'lishi mumkin</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Amaliy misol (shift = 3):</h4>
+                    <p><strong>Asl matn:</strong> "HELLO"</p>
+                    <div class="calculation-steps">
+                        <h5>Har bir harf uchun hisoblash:</h5>
+                        <ol>
+                            <li>H (7) + 3 = 10 → K</li>
+                            <li>E (4) + 3 = 7 → H</li>
+                            <li>L (11) + 3 = 14 → O</li>
+                            <li>L (11) + 3 = 14 → O</li>
+                            <li>O (14) + 3 = 17 → R</li>
+                        </ol>
+                        <p><strong>Natija:</strong> "KHOOR"</p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>Alfavit jadvali (shift = 3):</h4>
+                    <p><strong>Asl:</strong> A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</p>
+                    <p><strong>Shifr:</strong> D E F G H I J K L M N O P Q R S T U V W X Y Z A B C</p>
+                </div>
+
+                <h4>Matematik asoslar</h4>
+                <div class="calculation-steps">
+                    <h5>Modul arifmetika:</h5>
+                    <div class="formula-box">
+                        (a + b) mod n = ((a mod n) + (b mod n)) mod n<br>
+                        (a - b) mod n = ((a mod n) - (b mod n) + n) mod n<br>
+                        (a × b) mod n = ((a mod n) × (b mod n)) mod n
+                    </div>
+                    <p>Caesar shifrida n = 26 (alfavit uzunligi)</p>
+                </div>
+
+                <div class="calculation-steps">
+                    <h5>Shifrlash funksiyasi:</h5>
+                    <div class="formula-box">
+                        E<sub>k</sub>(x) = (x + k) mod 26<br>
+                        Bu yerda k - siljish miqdori, x - harf pozitsiyasi
+                    </div>
+                </div>
+
+                <div class="calculation-steps">
+                    <h5>Deshifrlash funksiyasi:</h5>
+                    <div class="formula-box">
+                        D<sub>k</sub>(y) = (y - k + 26) mod 26<br>
+                        Bu yerda y - shifrlangan harf pozitsiyasi
+                    </div>
+                    <p>+26 qo'shiladi, chunki manfiy son bo'lishi mumkin</p>
+                </div>
+
+                <div class="calculation-steps">
+                    <h5>Inversiya:</h5>
+                    <div class="formula-box">
+                        D<sub>k</sub>(E<sub>k</sub>(x)) = x<br>
+                        D<sub>k</sub> = E<sub>26-k</sub>
+                    </div>
+                    <p>Deshifrlash funksiyasi shifrlash funksiyasining inversiyasidir.</p>
+                </div>
+
+                <h4>Kriptanaliz</h4>
+                <div class="example-box">
+                    <h4>Caesar hujumlar:</h4>
+                    <ul>
+                        <li><strong>Brute Force:</strong> Barcha 25 ta variantni sinab ko'rish</li>
+                        <li><strong>Frequency analysis:</strong> Eng ko'p ishlatilgan harflarni aniqlash</li>
+                        <li><strong>Pattern recognition:</strong> Ma'lum so'zlar va qismlarni topish</li>
+                    </ul>
+                    <div class="formula-box">
+                        Eng ko'p ishlatilgan harflar:<br>
+                        Ingliz tilida: E, T, A, O, I, N<br>
+                        O'zbek tilida: A, O, I, E, U
+                    </div>
+                </div>
+
+                <h4>Xususiyatlari</h4>
+                <ul>
+                    <li>Monoalfavitik shifrlash - bir xil harf har doim bir xil harfga shifrlanadi</li>
+                    <li>Oddiy va tez ishlaydi</li>
+                    <li>Xavfsizlik past (faqat 25 ta variant)</li>
+                    <li>Brute force hujumi bilan osongina buziladi</li>
+                </ul>
+
+                <h4>Tarixiy ma'lumotlar</h4>
+                <div class="example-box">
+                    <p>Caesar shifri miloddan avval 100-yilda Rim imperatori Yuliy Sezar tomonidan harbiy xabarlarni shifrlash uchun ishlatilgan. U har bir harfni 3 ta pozitsiyaga siljitgan (shift = 3). Bu eng qadimgi va eng oddiy shifrlash usullaridan biridir.</p>
+                </div>
+
+                <h4>Variatsiyalar</h4>
+                <div class="example-box">
+                    <h4>Caesar shifri variatsiyalari:</h4>
+                    <ul>
+                        <li><strong>ROT13:</strong> Shift = 13, o'z-o'ziga inversiya</li>
+                        <li><strong>Atbash:</strong> A↔Z, B↔Y, C↔X (shift = 25)</li>
+                        <li><strong>Affine cipher:</strong> E(x) = (ax + b) mod 26</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="encryption-area">
+                <div class="input-group">
+                    <label>Siljish (shift):</label>
+                    <input type="number" id="caesar-shift" value="3" min="1" max="25">
+                    <label>Matn (shifrlash uchun):</label>
+                    <textarea id="caesar-plaintext" placeholder="Shifrlanadigan matnni kiriting..."></textarea>
+                    <button id="caesar-encrypt" class="btn btn-success">Shifrlash</button>
+                </div>
+                <div class="output-group">
+                    <label>Shifrlangan matn:</label>
+                    <textarea id="caesar-ciphertext" readonly></textarea>
+                    <button id="caesar-decrypt" class="btn btn-warning">Deshifrlash</button>
+                </div>
+                <div class="result-group">
+                    <label>Deshifrlangan matn:</label>
+                    <textarea id="caesar-decrypted" readonly></textarea>
+                </div>
+                <div class="calculation-display" id="caesar-calculations" style="display: none;">
+                    <h5 style="color: var(--primary-color); margin-bottom: 10px;">Hisoblash Jarayoni:</h5>
+                    <div id="caesar-calc-content"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Base64 Algorithm Section -->
+        <section id="base64-section" class="algorithm-section">
+            <div class="algorithm-info">
+                <h2>Base64 kodlash</h2>
+                <p>Base64 - matnni 64 ta belgidan iborat alfavitga kodlash usuli. Shifrlash emas, kodlash.</p>
+            </div>
+
+            <div class="theory-section">
+                <h3>📚 Nazariy ma'lumotlar</h3>
+                
+                <h4>Base64 nima?</h4>
+                <p>Base64 - bu matnni 64 ta belgidan iborat alfavitga kodlash usuli. Bu shifrlash emas, balki ma'lumotlarni boshqa formatga o'tkazish usuli. Asosan elektron pochta, URL va boshqa joylarda ishlatiladi.</p>
+                
+                <h4>Base64 alfaviti</h4>
+                <div class="formula-box">
+                    A-Z (26 ta), a-z (26 ta), 0-9 (10 ta), +, / (2 ta) = 64 ta belgi
+                </div>
+                <p><strong>Alfavit:</strong> ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/</p>
+                <p><strong>Padding belgisi:</strong> = (matn uzunligi 3 ga bo'linmasa)</p>
+
+                <h4>Ishlash prinsipi</h4>
+                <p>Har bir 3 bayt (24 bit) 4 ta Base64 belgiga (har biri 6 bit) o'tkaziladi.</p>
+
+                <div class="example-box">
+                    <h4>Kodlash jarayoni:</h4>
+                    <div class="calculation-steps">
+                        <h5>1-qadam: Matnni baytlarga o'tkazish</h5>
+                        <p>Har bir belgi UTF-8 kodida baytlarga o'tkaziladi</p>
+                        
+                        <h5>2-qadam: Baytlarni 6-bitlik guruhlarga bo'lish</h5>
+                        <p>Har bir 3 bayt (24 bit) → 4 ta 6-bitlik guruh</p>
+                        
+                        <h5>3-qadam: Har bir 6-bit guruhni Base64 belgiga o'tkazish</h5>
+                        <p>0-63 orasidagi raqam Base64 alfavitidagi belgiga mos keladi</p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>Amaliy misol:</h4>
+                    <p><strong>Matn:</strong> "Hi"</p>
+                    <div class="calculation-steps">
+                        <h5>Hisoblash:</h5>
+                        <ol>
+                            <li>H = 72 (ASCII) = 01001000 (binary)</li>
+                            <li>i = 105 (ASCII) = 01101001 (binary)</li>
+                            <li>Birlashtirilgan: 01001000 01101001 (16 bit)</li>
+                            <li>6-bitlik guruhlar: 010010 | 000110 | 100100 | (padding)</li>
+                            <li>18, 6, 36 → S, G, k</li>
+                            <li>Padding: ==</li>
+                        </ol>
+                        <p><strong>Natija:</strong> "SGk="</p>
+                    </div>
+                </div>
+
+                <h4>Matematik asoslar</h4>
+                <div class="calculation-steps">
+                    <h5>Bit konversiya:</h5>
+                    <div class="formula-box">
+                        3 bayt = 24 bit → 4 ta 6-bitlik guruh<br>
+                        Har bir 6-bit = 0-63 orasidagi raqam → Base64 belgisi
+                    </div>
+                    <p><strong>Misol:</strong> "Hi" = 2 bayt = 16 bit</p>
+                    <p>16 bit + 2 bit padding = 18 bit → 3 ta 6-bitlik guruh + 1 ta padding</p>
+                </div>
+
+                <div class="calculation-steps">
+                    <h5>Padding qonuni:</h5>
+                    <div class="formula-box">
+                        Agar baytlar soni 3 ga bo'linsa: padding yo'q<br>
+                        Agar qoldiq 1 bo'lsa: 2 ta "=" qo'shiladi<br>
+                        Agar qoldiq 2 bo'lsa: 1 ta "=" qo'shiladi
+                    </div>
+                    <p><strong>Misol:</strong> "Hi" = 2 bayt → 1 ta "=" qo'shiladi</p>
+                </div>
+
+                <div class="calculation-steps">
+                    <h5>Hajm o'zgarish:</h5>
+                    <div class="formula-box">
+                        Kodlangan hajm = (Asl hajm × 4/3) + padding<br>
+                        Yaxlitlash: ⌈n × 4/3⌉
+                    </div>
+                    <p><strong>Misol:</strong> 3 bayt → 4 belgi (padding yo'q)</p>
+                    <p>2 bayt → 4 belgi (2 ta padding bit + 1 ta "=")</p>
+                </div>
+
+                <div class="calculation-steps">
+                    <h5>Bit operatsiyalar:</h5>
+                    <div class="formula-box">
+                        Bit shift: value >> 6 (o'ngga 6 bit siljitish)<br>
+                        Bit mask: value & 0x3F (oxirgi 6 bitni olish)<br>
+                        Bit birlashtirish: (byte1 << 16) | (byte2 << 8) | byte3
+                    </div>
+                </div>
+
+                <h4>Algoritm tafsilotlari</h4>
+                <div class="example-box">
+                    <h4>Kodlash Algoritmi:</h4>
+                    <ol>
+                        <li>Matnni UTF-8 baytlariga o'tkazish</li>
+                        <li>Har bir 3 baytni 24-bit soniga birlashtirish</li>
+                        <li>24-bitni 4 ta 6-bitlik guruhga bo'lish</li>
+                        <li>Har bir 6-bitni Base64 alfavitidagi belgiga o'tkazish</li>
+                        <li>Kerak bo'lsa padding qo'shish</li>
+                    </ol>
+                </div>
+
+                <div class="example-box">
+                    <h4>Dekodlash algoritmi:</h4>
+                    <ol>
+                        <li>Base64 belgilarini 6-bitlik raqamlarga o'tkazish</li>
+                        <li>4 ta 6-bitni 24-bit soniga birlashtirish</li>
+                        <li>24-bitni 3 ta baytga bo'lish</li>
+                        <li>Baytlarni UTF-8 matnga o'tkazish</li>
+                        <li>Padding belgilarini olib tashlash</li>
+                    </ol>
+                </div>
+
+                <h4>Xavfsizlik va Cheklovlar</h4>
+                <div class="example-box">
+                    <h4>Base64 cheklovlari:</h4>
+                    <ul>
+                        <li><strong>Shifrlash emas:</strong> Xavfsizlik bermaydi, faqat kodlash</li>
+                        <li><strong>Hajm oshishi:</strong> Ma'lumotlar hajmi ~33% oshadi</li>
+                        <li><strong>URL Encoding:</strong> URLda "+" va "/" muammo bo'lishi mumkin</li>
+                        <li><strong>Base64URL:</strong> "+" → "-", "/" → "_", "=" → olib tashlash</li>
+                    </ul>
+                </div>
+
+                <h4>Xususiyatlari</h4>
+                <ul>
+                    <li>Shifrlash emas, kodlash usuli</li>
+                    <li>Ma'lumotlar hajmi ~33% oshadi</li>
+                    <li>Barcha belgilar ASCII bo'lishi kafolatlanadi</li>
+                    <li>URL va elektron pochta orqali xavfsiz uzatiladi</li>
+                </ul>
+
+                <h4>Amaliy Qo'llanilishi</h4>
+                <div class="example-box">
+                    <h4>Base64 qayerda ishlatiladi:</h4>
+                    <ul>
+                        <li>Email (MIME) - binary ma'lumotlarni matn sifatida uzatish</li>
+                        <li>Data URI - rasm va fayllarni HTML/CSS ichida</li>
+                        <li>JSON Web Tokens (JWT) - tokenlarni kodlash</li>
+                        <li>HTTP Basic Authentication - login:password kodlash</li>
+                        <li>XML va HTML - binary ma'lumotlarni qo'shish</li>
+                    </ul>
+                </div>
+
+                <h4>Tarixiy ma'lumotlar</h4>
+                <div class="example-box">
+                    <p>Base64 kodlash 1980-yillarda elektron pochta (MIME) protokoli uchun yaratilgan. U binary ma'lumotlarni faqat ASCII belgilaridan foydalangan holda uzatish imkonini beradi. RFC 4648 standartida belgilangan.</p>
+                </div>
+            </div>
+
+            <div class="encryption-area">
+                <div class="input-group">
+                    <label>Matn (kodlash uchun):</label>
+                    <textarea id="base64-plaintext" placeholder="Kodlanadigan matnni kiriting..."></textarea>
+                    <button id="base64-encode" class="btn btn-success">Kodlash</button>
+                </div>
+                <div class="output-group">
+                    <label>Kodlangan matn:</label>
+                    <textarea id="base64-encoded" readonly></textarea>
+                    <button id="base64-decode" class="btn btn-warning">Dekodlash</button>
+                </div>
+                <div class="result-group">
+                    <label>Dekodlangan matn:</label>
+                    <textarea id="base64-decoded" readonly></textarea>
+                </div>
+                <div class="calculation-display" id="base64-calculations" style="display: none;">
+                    <h5 style="color: var(--primary-color); margin-bottom: 10px;">Hisoblash Jarayoni:</h5>
+                    <div id="base64-calc-content"></div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 Klassik shifrlash algoritmlari - Talabalar uchun amaliy ko'rsatma</p>
+        </footer>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
+
